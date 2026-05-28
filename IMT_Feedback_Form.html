@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMT Critical Care Course — Feedback</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #003087;
+  --mid:     #0069B4;
+  --light:   #41B6E6;
+  --teal:    #009B77;
+  --teal-lt: #e0f5ef;
+  --ink:     #0d1f2d;
+  --ink-2:   #2c4a5a;
+  --ink-3:   #6b8fa3;
+  --paper:   #f8fbfd;
+  --white:   #ffffff;
+  --border:  #cce0ee;
+  --red:     #da291c;
+  --green:   #006747;
+  --amber:   #d97706;
+  --r:       8px;
+  --shadow:  0 2px 12px rgba(0,48,135,.08);
+  --shadow-lg: 0 8px 32px rgba(0,48,135,.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.site-header {
+  background: var(--navy);
+  padding: 0 24px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,48,135,.3);
+}
+.header-inner {
+  max-width: 820px; margin: 0 auto;
+  display: flex; align-items: center; gap: 16px;
+  height: 56px;
+}
+.header-logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.nhs-badge {
+  background: var(--mid); color: #fff;
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+  padding: 3px 7px; border-radius: 4px; letter-spacing: .04em;
+}
+.header-title {
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,.85); white-space: nowrap;
+}
+.header-right {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: rgba(255,255,255,.5); letter-spacing: .04em;
+}
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #005a9e 60%, var(--mid) 100%);
+  padding: 48px 24px 40px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(65,182,230,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+  color: var(--light); letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(26px, 5vw, 40px); font-weight: 400;
+  color: #fff; line-height: 1.15; margin-bottom: 12px;
+}
+.hero h1 em { color: var(--light); font-style: italic; }
+.hero-sub {
+  color: rgba(255,255,255,.7); font-size: 14px; max-width: 480px; margin: 0 auto 24px;
+}
+.hero-meta {
+  display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+}
+.hero-chip {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.75); font-family: 'DM Mono', monospace;
+  font-size: 11px; padding: 4px 10px; border-radius: 20px;
+}
+
+/* ── Main ── */
+main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
+
+/* ── Progress bar ── */
+.progress-wrap {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px 18px; margin-bottom: 28px;
+  box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 14px;
+}
+.progress-label {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--ink-3); white-space: nowrap; flex-shrink: 0;
+}
+.progress-bar-bg {
+  flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--navy), var(--mid));
+  border-radius: 3px; transition: width .4s ease;
+  width: 0%;
+}
+.progress-pct {
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+  color: var(--navy); white-space: nowrap;
+}
+
+/* ── Section ── */
+.form-section {
+  background: #fff; border-radius: 12px;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  margin-bottom: 20px; overflow: hidden;
+}
+.section-header {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.section-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0; margin-top: 1px;
+}
+.section-header-text {}
+.section-title {
+  font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 400;
+  color: var(--ink); line-height: 1.2; margin-bottom: 2px;
+}
+.section-subtitle {
+  font-size: 12.5px; color: var(--ink-3);
+  font-family: 'DM Mono', monospace;
+}
+.section-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 18px; }
+
+/* ── Question row ── */
+.q-row {}
+.q-label {
+  font-size: 13.5px; font-weight: 500; color: var(--ink-2);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.q-num {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  background: var(--navy); color: #fff;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.q-required { color: var(--red); font-size: 12px; }
+
+/* ── Rating scale ── */
+.scale-wrap {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+}
+.scale-option { position: relative; }
+.scale-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.scale-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 6px 8px; border-radius: 8px;
+  border: 1.5px solid var(--border); background: var(--paper);
+  cursor: pointer; transition: all .18s ease; text-align: center;
+  user-select: none;
+}
+.scale-btn:hover { border-color: var(--mid); background: #eef6fb; }
+.scale-option input:checked + .scale-btn {
+  background: var(--navy); border-color: var(--navy); color: #fff;
+  box-shadow: 0 3px 10px rgba(0,48,135,.25);
+  transform: translateY(-2px);
+}
+.scale-num {
+  font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500;
+  line-height: 1; color: var(--navy);
+}
+.scale-option input:checked + .scale-btn .scale-num { color: #fff; }
+.scale-word {
+  font-size: 10px; font-weight: 500; letter-spacing: .02em;
+  color: var(--ink-3); line-height: 1.2;
+}
+.scale-option input:checked + .scale-btn .scale-word { color: rgba(255,255,255,.8); }
+.scale-end-labels {
+  display: flex; justify-content: space-between;
+  margin-top: 6px; padding: 0 2px;
+}
+.scale-end {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--ink-3); letter-spacing: .04em;
+}
+
+/* ── Level scale (pitched at level) ── */
+.level-wrap {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+}
+.level-option { position: relative; }
+.level-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.level-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 6px 8px; border-radius: 8px;
+  border: 1.5px solid var(--border); background: var(--paper);
+  cursor: pointer; transition: all .18s ease; text-align: center;
+  user-select: none;
+}
+.level-btn:hover { border-color: var(--teal); background: var(--teal-lt); }
+.level-option input:checked + .level-btn {
+  background: var(--teal); border-color: var(--teal); color: #fff;
+  box-shadow: 0 3px 10px rgba(0,155,119,.25);
+  transform: translateY(-2px);
+}
+.level-icon { font-size: 14px; line-height: 1; }
+.level-word {
+  font-size: 9.5px; font-weight: 500;
+  color: var(--ink-3); letter-spacing: .02em; line-height: 1.2;
+}
+.level-option input:checked + .level-btn .level-word { color: rgba(255,255,255,.9); }
+
+/* ── Text area ── */
+.q-textarea {
+  width: 100%; padding: 10px 14px; border-radius: 8px;
+  border: 1.5px solid var(--border); background: var(--paper);
+  font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--ink);
+  resize: vertical; min-height: 70px; outline: none;
+  transition: border-color .2s;
+}
+.q-textarea:focus { border-color: var(--mid); background: #fff; }
+.q-textarea::placeholder { color: var(--ink-3); }
+
+/* ── Overall section ── */
+.overall-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+@media (max-width: 540px) { .overall-grid { grid-template-columns: 1fr; } }
+
+/* ── Submit ── */
+.submit-wrap {
+  background: var(--navy); border-radius: 12px;
+  padding: 28px 24px; text-align: center; margin-top: 8px;
+}
+.submit-wrap p {
+  color: rgba(255,255,255,.7); font-size: 13px; margin-bottom: 16px;
+}
+.btn-submit {
+  background: var(--light); color: var(--navy);
+  border: none; padding: 13px 36px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-submit:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,.2); }
+.btn-submit:active { transform: none; }
+
+/* ── Success ── */
+.success-screen {
+  display: none; text-align: center; padding: 60px 24px;
+}
+.success-screen.show { display: block; }
+.success-icon { font-size: 52px; margin-bottom: 16px; }
+.success-screen h2 {
+  font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400;
+  color: var(--navy); margin-bottom: 10px;
+}
+.success-screen p { color: var(--ink-3); font-size: 14px; max-width: 400px; margin: 0 auto; }
+
+/* ── Collapsible sections ── */
+.section-toggle {
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.section-toggle .toggle-arrow {
+  margin-left: auto; font-size: 12px; color: var(--ink-3);
+  transition: transform .2s; flex-shrink: 0;
+}
+.section-toggle.closed .toggle-arrow { transform: rotate(-90deg); }
+.section-body.closed { display: none; }
+
+/* ── Colour coding per session type ── */
+.icon-morning  { background: #e8f0fe; }
+.icon-plenary  { background: #fce8e8; }
+.icon-afternoon { background: #e8f5e9; }
+.icon-rrt      { background: #fff3e0; }
+.icon-overall  { background: #f3e5f5; }
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .scale-word, .level-word { font-size: 8.5px; }
+  .section-body { padding: 14px; gap: 16px; }
+  .scale-num { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <span class="nhs-badge">NHS</span>
+      <span class="header-title">Oxford University Hospitals</span>
+    </div>
+    <span class="header-right">IMT · Critical Care · 2026</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Course Evaluation</div>
+  <h1>IMT <em>Critical Care</em><br>Teaching Day</h1>
+  <p class="hero-sub">Your feedback directly shapes future courses. All responses are anonymous — please be honest.</p>
+  <div class="hero-meta">
+    <span class="hero-chip">📍 OUH · John Radcliffe</span>
+    <span class="hero-chip">⏱ ~5 minutes</span>
+    <span class="hero-chip">🔒 Anonymous</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- Progress bar -->
+  <div class="progress-wrap">
+    <span class="progress-label">PROGRESS</span>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+
+  <form id="feedbackForm" novalidate>
+
+    <!-- ══ MORNING CIRCUIT STATIONS ══ -->
+
+    <!-- 1. Shock & Circulation -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-morning">🫀</div>
+        <div class="section-header-text">
+          <div class="section-title">Shock &amp; Circulation</div>
+          <div class="section-subtitle">Morning circuit · 30 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">1</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap" id="scale-shock-quality">
+            <label class="scale-option"><input type="radio" name="shock_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="shock_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="shock_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="shock_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="shock_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">2</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="shock_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="shock_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="shock_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="shock_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="shock_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Basic Airway -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-morning">🫁</div>
+        <div class="section-header-text">
+          <div class="section-title">Basic Airway Management</div>
+          <div class="section-subtitle">Morning circuit · 30 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">3</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="airway_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="airway_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="airway_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="airway_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="airway_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">4</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="airway_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="airway_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="airway_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="airway_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="airway_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Oxygen & NIV -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-morning">💨</div>
+        <div class="section-header-text">
+          <div class="section-title">Oxygen Therapy &amp; NIV</div>
+          <div class="section-subtitle">Morning circuit · 30 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">5</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="o2niv_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="o2niv_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="o2niv_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="o2niv_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="o2niv_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">6</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="o2niv_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="o2niv_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="o2niv_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="o2niv_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="o2niv_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Mechanical Ventilation -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-morning">⚙️</div>
+        <div class="section-header-text">
+          <div class="section-title">Mechanical Ventilation</div>
+          <div class="section-subtitle">Morning circuit · 30 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">7</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="mechvent_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="mechvent_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="mechvent_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="mechvent_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="mechvent_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">8</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="mechvent_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="mechvent_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="mechvent_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="mechvent_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="mechvent_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ MIDDAY PLENARIES ══ -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-plenary">🧠</div>
+        <div class="section-header-text">
+          <div class="section-title">Human Factors Plenary</div>
+          <div class="section-subtitle">Midday plenary · 30 min</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">9</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="hf_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="hf_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="hf_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="hf_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="hf_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">10</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="hf_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="hf_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="hf_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="hf_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="hf_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-plenary">🚑</div>
+        <div class="section-header-text">
+          <div class="section-title">Trauma Plenary</div>
+          <div class="section-subtitle">Midday plenary · 30 min</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">11</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="trauma_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="trauma_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="trauma_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="trauma_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="trauma_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">12</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="trauma_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="trauma_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="trauma_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="trauma_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="trauma_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ AFTERNOON STATIONS ══ -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-afternoon">🩺</div>
+        <div class="section-header-text">
+          <div class="section-title">CVC &amp; Arterial Line</div>
+          <div class="section-subtitle">Afternoon circuit · 45 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">13</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="cvc_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="cvc_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="cvc_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="cvc_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="cvc_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">14</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="cvc_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="cvc_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="cvc_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="cvc_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="cvc_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-afternoon">🤖</div>
+        <div class="section-header-text">
+          <div class="section-title">Simulation — Deteriorating Patient</div>
+          <div class="section-subtitle">Afternoon circuit · 45 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">15</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="sim_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="sim_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="sim_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="sim_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="sim_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">16</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="sim_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="sim_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="sim_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="sim_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="sim_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-afternoon">💉</div>
+        <div class="section-header-text">
+          <div class="section-title">Tracheostomy (Daniela)</div>
+          <div class="section-subtitle">Afternoon circuit · 45 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">17</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="trachy_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="trachy_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="trachy_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="trachy_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="trachy_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">18</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="trachy_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="trachy_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="trachy_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="trachy_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="trachy_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RRT -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-rrt">🫘</div>
+        <div class="section-header-text">
+          <div class="section-title">Renal Replacement Therapy (Clare)</div>
+          <div class="section-subtitle">Afternoon plenary · whole group · 45 min</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">19</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">20</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="rrt_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transfer Ventilator -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-afternoon">🚐</div>
+        <div class="section-header-text">
+          <div class="section-title">Transfer Ventilator &amp; Troubleshooting</div>
+          <div class="section-subtitle">Afternoon circuit · 45 min station</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">21</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="transvent_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="transvent_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="transvent_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="transvent_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="transvent_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">22</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="transvent_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="transvent_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="transvent_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="transvent_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="transvent_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ OVERALL ══ -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon icon-overall">⭐</div>
+        <div class="section-header-text">
+          <div class="section-title">Overall Course Evaluation</div>
+          <div class="section-subtitle">Final impressions</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="overall-grid">
+          <div class="q-row">
+            <div class="q-label"><span class="q-num">23</span> Overall course quality <span class="q-required">*</span></div>
+            <div class="scale-wrap" style="grid-template-columns:repeat(5,1fr)">
+              <label class="scale-option"><input type="radio" name="overall_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+              <label class="scale-option"><input type="radio" name="overall_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+              <label class="scale-option"><input type="radio" name="overall_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+              <label class="scale-option"><input type="radio" name="overall_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+              <label class="scale-option"><input type="radio" name="overall_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+            </div>
+            <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+          </div>
+          <div class="q-row">
+            <div class="q-label"><span class="q-num">24</span> Would you recommend this course?</div>
+            <div class="scale-wrap" style="grid-template-columns:repeat(3,1fr)">
+              <label class="scale-option"><input type="radio" name="recommend" value="no"><span class="scale-btn"><span class="scale-word" style="font-size:13px;padding:4px 0">No</span></span></label>
+              <label class="scale-option"><input type="radio" name="recommend" value="maybe"><span class="scale-btn"><span class="scale-word" style="font-size:13px;padding:4px 0">Maybe</span></span></label>
+              <label class="scale-option"><input type="radio" name="recommend" value="yes"><span class="scale-btn"><span class="scale-word" style="font-size:13px;padding:4px 0">Definitely</span></span></label>
+            </div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">25</span> Best part of the day</div>
+          <textarea class="q-textarea" name="best_part" placeholder="What worked well? Which session was most valuable?" rows="2"></textarea>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">26</span> What could be improved?</div>
+          <textarea class="q-textarea" name="improve" placeholder="Content gaps, pacing, logistics, resources…" rows="2"></textarea>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">27</span> Any other comments</div>
+          <textarea class="q-textarea" name="other" placeholder="Anything else you'd like to share…" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-wrap">
+      <p>Your response is completely anonymous. Thank you for taking the time — this directly shapes future teaching.</p>
+      <button type="submit" class="btn-submit">
+        Submit feedback →
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Success -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <h2>Thank you for your feedback</h2>
+    <p>Your responses have been recorded. They'll be reviewed before the next course to improve the programme.</p>
+  </div>
+
+</main>
+
+<script>
+// ── Toggle sections ──
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  const isOpen = !body.classList.contains('closed');
+  body.classList.toggle('closed', isOpen);
+  header.classList.toggle('closed', isOpen);
+}
+
+// ── Progress tracking ──
+const requiredNames = [
+  'shock_quality','shock_level',
+  'airway_quality','airway_level',
+  'o2niv_quality','o2niv_level',
+  'mechvent_quality','mechvent_level',
+  'hf_quality','hf_level',
+  'trauma_quality','trauma_level',
+  'cvc_quality','cvc_level',
+  'sim_quality','sim_level',
+  'trachy_quality','trachy_level',
+  'rrt_quality','rrt_level',
+  'transvent_quality','transvent_level',
+  'overall_quality'
+];
+
+function updateProgress() {
+  const answered = requiredNames.filter(n =>
+    document.querySelector(`input[name="${n}"]:checked`)
+  ).length;
+  const pct = Math.round((answered / requiredNames.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+document.getElementById('feedbackForm').addEventListener('change', updateProgress);
+
+// ── Submit ──
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Check required fields
+  const missing = requiredNames.filter(n =>
+    !document.querySelector(`input[name="${n}"]:checked`)
+  );
+  if (missing.length > 0) {
+    // Scroll to first missing
+    const firstMissing = document.querySelector(`input[name="${missing[0]}"]`);
+    if (firstMissing) {
+      const section = firstMissing.closest('.form-section');
+      const body = section?.querySelector('.section-body');
+      const header = section?.querySelector('.section-header');
+      // Expand if closed
+      if (body?.classList.contains('closed')) {
+        body.classList.remove('closed');
+        header?.classList.remove('closed');
+      }
+      firstMissing.closest('.q-row')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    alert(`Please answer all required questions (${missing.length} remaining).`);
+    return;
+  }
+
+  // Collect data
+  const data = {};
+  const fd = new FormData(this);
+  for (const [k, v] of fd.entries()) data[k] = v;
+  data.submitted_at = new Date().toISOString();
+
+  // Try to POST to server; fall back to console log
+fetch('https://script.google.com/macros/s/AKfycbxxqFvdWPkaYvvd6c-CWxs1cU9tcowZQUiNXZtVUTVEd95upa8K0NVqvi67gsOOShNR/exec', {
+  method: 'POST',
+  mode: 'no-cors',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data)
+}).catch(() => {
+  const existing = JSON.parse(localStorage.getItem('imt_feedback') || '[]');
+  existing.push(data);
+  localStorage.setItem('imt_feedback', JSON.stringify(existing));
+});
+
+  // Show success
+  document.getElementById('feedbackForm').style.display = 'none';
+  document.getElementById('successScreen').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
