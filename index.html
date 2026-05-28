@@ -759,18 +759,7 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
           </div>
         </div>
         <div class="q-row">
-          <div class="q-label"><span class="q-num">25</span> Your name <span style="font-size:12px;color:var(--ink-3);font-weight:400">(for your attendance certificate)</span></div>
-          <input
-            type="text"
-            name="attendee_name"
-            id="attendeeName"
-            class="q-textarea"
-            placeholder="Dr / Mr / Ms … First Last"
-            style="min-height:unset;height:44px;resize:none"
-          />
-        </div>
-        <div class="q-row">
-          <div class="q-label"><span class="q-num">26</span> Best part of the day</div>
+          <div class="q-label"><span class="q-num">25</span> Best part of the day</div>
           <textarea class="q-textarea" name="best_part" placeholder="What worked well? Which session was most valuable?" rows="2"></textarea>
         </div>
         <div class="q-row">
@@ -880,8 +869,6 @@ function updateProgress() {
 document.getElementById('feedbackForm').addEventListener('change', updateProgress);
 
 // ── Submit ──
-let attendeeName = '';
-
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -911,9 +898,6 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   for (const [k, v] of fd.entries()) data[k] = v;
   data.submitted_at = new Date().toISOString();
 
-  // Store name for certificate
-  attendeeName = (document.getElementById('attendeeName').value || '').trim();
-
   // POST to Google Sheets
   fetch('https://script.google.com/macros/s/AKfycbxxqFvdWPkaYvvd6c-CWxs1cU9tcowZQUiNXZtVUTVEd95upa8K0NVqvi67gsOOShNR/exec', {
     method: 'POST',
@@ -934,8 +918,6 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
 
 // ── Certificate generation ──
 function downloadCertificate() {
-  const name = attendeeName || 'Attendee';
-
   // Build the certificate HTML
   const certHTML = `
     <html>
@@ -1005,18 +987,6 @@ function downloadCertificate() {
           line-height: 1.1; margin-bottom: 6mm;
         }
         .cert-title em { color: #0069B4; font-style: italic; }
-        .presented-to {
-          font-size: 10pt; color: #6b8fa3;
-          text-transform: uppercase; letter-spacing: 2px;
-          margin-bottom: 3mm;
-        }
-        .name-line {
-          font-family: 'DM Serif Display', serif;
-          font-size: 28pt; color: #0d1f2d;
-          border-bottom: 1.5px solid #cce0ee;
-          padding-bottom: 3mm; margin-bottom: 6mm;
-          min-width: 120mm; display: inline-block;
-        }
         .cert-body-text {
           font-size: 10.5pt; color: #2c4a5a; line-height: 1.6;
           max-width: 160mm; margin-bottom: 8mm;
@@ -1069,18 +1039,15 @@ function downloadCertificate() {
               <div class="org-name">Oxford University Hospitals<br>NHS Foundation Trust</div>
               <div class="org-sub">Department of Critical Care Medicine</div>
             </div>
-            <div class="cert-num">Certificate No. IMT/ICM/2026/001</div>
+            <div class="cert-num">IMT Critical Care Teaching Programme · 2026</div>
           </div>
 
           <div class="eyebrow">Certificate of Attendance</div>
           <div class="cert-title">IMT <em>Critical Care</em><br>Teaching Day</div>
 
-          <div class="presented-to">Awarded to</div>
-          <div class="name-line">${name}</div>
-
           <div class="cert-body-text">
-            for attending and completing the <strong>IMT Intensive Care Medicine Teaching Day</strong>,
-            an accredited full-day clinical skills and simulation course covering critical care
+            This certifies attendance at and completion of the <strong>IMT Intensive Care Medicine Teaching Day</strong>
+            — an accredited full-day clinical skills and simulation course covering critical care
             assessment, airway management, mechanical ventilation, renal replacement therapy,
             transfer medicine and clinical simulation.
           </div>
