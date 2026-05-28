@@ -350,7 +350,7 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-morning">🫀</div>
         <div class="section-header-text">
-          <div class="section-title">Shock &amp; Circulation</div>
+          <div class="section-title">Shock &amp; Circulation [Yahya]</div>
           <div class="section-subtitle">Morning circuit · 30 min station</div>
         </div>
         <span class="toggle-arrow">▼</span>
@@ -385,7 +385,7 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-morning">🫁</div>
         <div class="section-header-text">
-          <div class="section-title">Basic Airway Management</div>
+          <div class="section-title">Basic Airway Management [Tushar]</div>
           <div class="section-subtitle">Morning circuit · 30 min station</div>
         </div>
         <span class="toggle-arrow">▼</span>
@@ -420,7 +420,7 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-morning">💨</div>
         <div class="section-header-text">
-          <div class="section-title">Oxygen Therapy &amp; NIV</div>
+          <div class="section-title">Oxygen Therapy &amp; NIV [Jane]</div>
           <div class="section-subtitle">Morning circuit · 30 min station</div>
         </div>
         <span class="toggle-arrow">▼</span>
@@ -455,7 +455,7 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-morning">⚙️</div>
         <div class="section-header-text">
-          <div class="section-title">Mechanical Ventilation</div>
+          <div class="section-title">Mechanical Ventilation [Manjit]</div>
           <div class="section-subtitle">Morning circuit · 30 min station</div>
         </div>
         <span class="toggle-arrow">▼</span>
@@ -490,8 +490,8 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-plenary">🧠</div>
         <div class="section-header-text">
-          <div class="section-title">Human Factors Plenary</div>
-          <div class="section-subtitle">Midday plenary · 30 min</div>
+          <div class="section-title">Human Factors lecture [Raja]</div>
+          <div class="section-subtitle">Midday lecture · 30 min</div>
         </div>
         <span class="toggle-arrow">▼</span>
       </div>
@@ -524,8 +524,8 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-plenary">🚑</div>
         <div class="section-header-text">
-          <div class="section-title">Trauma Plenary</div>
-          <div class="section-subtitle">Midday plenary · 30 min</div>
+          <div class="section-title">Trauma lecture [Manjit]</div>
+          <div class="section-subtitle">Midday lecture · 30 min</div>
         </div>
         <span class="toggle-arrow">▼</span>
       </div>
@@ -553,13 +553,47 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
         </div>
       </div>
     </div>
+    <!-- RRT -->
+    <div class="form-section">
+      <div class="section-header section-toggle" onclick="toggleSection(this)">
+        <div class="section-icon icon-rrt">🫘</div>
+        <div class="section-header-text">
+          <div class="section-title">Renal Replacement Therapy (Clare)</div>
+          <div class="section-subtitle">Afternoon lecture · whole group · 45 min</div>
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">19</span> Overall quality of this session <span class="q-required">*</span></div>
+          <div class="scale-wrap">
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
+            <label class="scale-option"><input type="radio" name="rrt_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
+          </div>
+          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">20</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
+          <div class="level-wrap">
+            <label class="level-option"><input type="radio" name="rrt_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
+            <label class="level-option"><input type="radio" name="rrt_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- ══ AFTERNOON STATIONS ══ -->
     <div class="form-section">
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-afternoon">🩺</div>
         <div class="section-header-text">
-          <div class="section-title">CVC &amp; Arterial Line</div>
+          <div class="section-title">CVC &amp; Arterial Line [Yahya]</div>
           <div class="section-subtitle">Afternoon circuit · 45 min station</div>
         </div>
         <span class="toggle-arrow">▼</span>
@@ -593,7 +627,7 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-afternoon">🤖</div>
         <div class="section-header-text">
-          <div class="section-title">Simulation — Deteriorating Patient</div>
+          <div class="section-title">Simulation — Deteriorating Patient [Manjit/Tushar]</div>
           <div class="section-subtitle">Afternoon circuit · 45 min station</div>
         </div>
         <span class="toggle-arrow">▼</span>
@@ -657,47 +691,13 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
       </div>
     </div>
 
-    <!-- RRT -->
-    <div class="form-section">
-      <div class="section-header section-toggle" onclick="toggleSection(this)">
-        <div class="section-icon icon-rrt">🫘</div>
-        <div class="section-header-text">
-          <div class="section-title">Renal Replacement Therapy (Clare)</div>
-          <div class="section-subtitle">Afternoon plenary · whole group · 45 min</div>
-        </div>
-        <span class="toggle-arrow">▼</span>
-      </div>
-      <div class="section-body">
-        <div class="q-row">
-          <div class="q-label"><span class="q-num">19</span> Overall quality of this session <span class="q-required">*</span></div>
-          <div class="scale-wrap">
-            <label class="scale-option"><input type="radio" name="rrt_quality" value="1"><span class="scale-btn"><span class="scale-num">1</span><span class="scale-word">Poor</span></span></label>
-            <label class="scale-option"><input type="radio" name="rrt_quality" value="2"><span class="scale-btn"><span class="scale-num">2</span><span class="scale-word">Below avg</span></span></label>
-            <label class="scale-option"><input type="radio" name="rrt_quality" value="3"><span class="scale-btn"><span class="scale-num">3</span><span class="scale-word">Good</span></span></label>
-            <label class="scale-option"><input type="radio" name="rrt_quality" value="4"><span class="scale-btn"><span class="scale-num">4</span><span class="scale-word">Very good</span></span></label>
-            <label class="scale-option"><input type="radio" name="rrt_quality" value="5"><span class="scale-btn"><span class="scale-num">5</span><span class="scale-word">Excellent</span></span></label>
-          </div>
-          <div class="scale-end-labels"><span class="scale-end">POOR</span><span class="scale-end">EXCELLENT</span></div>
-        </div>
-        <div class="q-row">
-          <div class="q-label"><span class="q-num">20</span> Pitched at the right level for IMT <span class="q-required">*</span></div>
-          <div class="level-wrap">
-            <label class="level-option"><input type="radio" name="rrt_level" value="1"><span class="level-btn"><span class="level-icon">📉</span><span class="level-word">Too basic</span></span></label>
-            <label class="level-option"><input type="radio" name="rrt_level" value="2"><span class="level-btn"><span class="level-icon">👇</span><span class="level-word">Slightly basic</span></span></label>
-            <label class="level-option"><input type="radio" name="rrt_level" value="3"><span class="level-btn"><span class="level-icon">✅</span><span class="level-word">Just right</span></span></label>
-            <label class="level-option"><input type="radio" name="rrt_level" value="4"><span class="level-btn"><span class="level-icon">👆</span><span class="level-word">Slightly advanced</span></span></label>
-            <label class="level-option"><input type="radio" name="rrt_level" value="5"><span class="level-btn"><span class="level-icon">📈</span><span class="level-word">Too advanced</span></span></label>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Transfer Ventilator -->
     <div class="form-section">
       <div class="section-header section-toggle" onclick="toggleSection(this)">
         <div class="section-icon icon-afternoon">🚐</div>
         <div class="section-header-text">
-          <div class="section-title">Transfer Ventilator &amp; Troubleshooting</div>
+          <div class="section-title">Transfer Ventilator &amp; Troubleshooting [Jane/Kate]</div>
           <div class="section-subtitle">Afternoon circuit · 45 min station</div>
         </div>
         <span class="toggle-arrow">▼</span>
