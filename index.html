@@ -759,15 +759,26 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
           </div>
         </div>
         <div class="q-row">
-          <div class="q-label"><span class="q-num">25</span> Best part of the day</div>
+          <div class="q-label"><span class="q-num">25</span> Your name <span style="font-size:12px;color:var(--ink-3);font-weight:400">(for your attendance certificate)</span></div>
+          <input
+            type="text"
+            name="attendee_name"
+            id="attendeeName"
+            class="q-textarea"
+            placeholder="Dr / Mr / Ms … First Last"
+            style="min-height:unset;height:44px;resize:none"
+          />
+        </div>
+        <div class="q-row">
+          <div class="q-label"><span class="q-num">26</span> Best part of the day</div>
           <textarea class="q-textarea" name="best_part" placeholder="What worked well? Which session was most valuable?" rows="2"></textarea>
         </div>
         <div class="q-row">
-          <div class="q-label"><span class="q-num">26</span> What could be improved?</div>
+          <div class="q-label"><span class="q-num">27</span> What could be improved?</div>
           <textarea class="q-textarea" name="improve" placeholder="Content gaps, pacing, logistics, resources…" rows="2"></textarea>
         </div>
         <div class="q-row">
-          <div class="q-label"><span class="q-num">27</span> Any other comments</div>
+          <div class="q-label"><span class="q-num">28</span> Any other comments</div>
           <textarea class="q-textarea" name="other" placeholder="Anything else you'd like to share…" rows="2"></textarea>
         </div>
       </div>
@@ -783,14 +794,54 @@ main { max-width: 820px; margin: 0 auto; padding: 32px 16px 80px; }
 
   </form>
 
-  <!-- Success -->
+  <!-- Success + Certificate -->
   <div class="success-screen" id="successScreen">
     <div class="success-icon">✅</div>
     <h2>Thank you for your feedback</h2>
     <p>Your responses have been recorded. They'll be reviewed before the next course to improve the programme.</p>
+
+    <div class="cert-download-wrap">
+      <p class="cert-intro">Your attendance certificate is ready to download.</p>
+      <button class="btn-cert" onclick="downloadCertificate()">
+        🎓 Download Certificate (PDF)
+      </button>
+    </div>
+
+    <!-- Certificate preview (hidden, used for PDF generation) -->
+    <div id="certCanvas" style="position:absolute;left:-9999px;top:0;"></div>
   </div>
 
 </main>
+
+<style>
+/* ── Certificate styles ── */
+.cert-download-wrap {
+  margin-top: 28px; padding: 24px 28px;
+  background: linear-gradient(135deg, #f0f7ff, #e8f5e9);
+  border: 1.5px solid var(--border); border-radius: 12px;
+  max-width: 420px; margin-left: auto; margin-right: auto;
+}
+.cert-intro {
+  font-size: 14px; color: var(--ink-2); margin-bottom: 14px;
+}
+.btn-cert {
+  background: var(--navy); color: #fff;
+  border: none; padding: 13px 28px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-cert:hover { background: var(--mid); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,48,135,.25); }
+
+/* ── Certificate itself (rendered off-screen as HTML, then printed) ── */
+#certPreview {
+  width: 794px; /* A4 landscape width at 96dpi */
+  height: 562px;
+  background: #fff;
+  font-family: 'DM Serif Display', Georgia, serif;
+  position: relative; overflow: hidden;
+  border: 1px solid #ccc;
+}
+</style>
 
 <script>
 // ── Toggle sections ──
@@ -829,6 +880,8 @@ function updateProgress() {
 document.getElementById('feedbackForm').addEventListener('change', updateProgress);
 
 // ── Submit ──
+let attendeeName = '';
+
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -837,13 +890,11 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     !document.querySelector(`input[name="${n}"]:checked`)
   );
   if (missing.length > 0) {
-    // Scroll to first missing
     const firstMissing = document.querySelector(`input[name="${missing[0]}"]`);
     if (firstMissing) {
       const section = firstMissing.closest('.form-section');
       const body = section?.querySelector('.section-body');
       const header = section?.querySelector('.section-header');
-      // Expand if closed
       if (body?.classList.contains('closed')) {
         body.classList.remove('closed');
         header?.classList.remove('closed');
@@ -860,23 +911,227 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   for (const [k, v] of fd.entries()) data[k] = v;
   data.submitted_at = new Date().toISOString();
 
-  // Try to POST to server; fall back to console log
-fetch('https://script.google.com/macros/s/AKfycbxxqFvdWPkaYvvd6c-CWxs1cU9tcowZQUiNXZtVUTVEd95upa8K0NVqvi67gsOOShNR/exec', {
-  method: 'POST',
-  mode: 'no-cors',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(data)
-}).catch(() => {
-  const existing = JSON.parse(localStorage.getItem('imt_feedback') || '[]');
-  existing.push(data);
-  localStorage.setItem('imt_feedback', JSON.stringify(existing));
-});
+  // Store name for certificate
+  attendeeName = (document.getElementById('attendeeName').value || '').trim();
+
+  // POST to Google Sheets
+  fetch('https://script.google.com/macros/s/AKfycbxxqFvdWPkaYvvd6c-CWxs1cU9tcowZQUiNXZtVUTVEd95upa8K0NVqvi67gsOOShNR/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(() => {
+    const existing = JSON.parse(localStorage.getItem('imt_feedback') || '[]');
+    existing.push(data);
+    localStorage.setItem('imt_feedback', JSON.stringify(existing));
+  });
 
   // Show success
   document.getElementById('feedbackForm').style.display = 'none';
   document.getElementById('successScreen').classList.add('show');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// ── Certificate generation ──
+function downloadCertificate() {
+  const name = attendeeName || 'Attendee';
+
+  // Build the certificate HTML
+  const certHTML = `
+    <html>
+    <head>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          width: 297mm; height: 210mm;
+          background: #fff;
+          display: flex; align-items: stretch;
+          font-family: 'DM Sans', sans-serif;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .left-bar {
+          width: 14mm; background: #003087; flex-shrink: 0;
+        }
+        .accent-bar {
+          width: 5mm; background: #41B6E6; flex-shrink: 0;
+        }
+        .cert-body {
+          flex: 1; padding: 18mm 22mm 14mm 20mm;
+          display: flex; flex-direction: column;
+          position: relative;
+        }
+        /* Watermark */
+        .cert-body::before {
+          content: 'OUH';
+          position: absolute; right: 28mm; top: 50%;
+          transform: translateY(-50%);
+          font-family: 'DM Serif Display', serif;
+          font-size: 140pt; color: rgba(0,48,135,.04);
+          letter-spacing: -4px; pointer-events: none;
+          z-index: 0;
+        }
+        .cert-content { position: relative; z-index: 1; flex: 1; }
+        .top-row {
+          display: flex; justify-content: space-between;
+          align-items: flex-start; margin-bottom: 10mm;
+        }
+        .nhs-block {}
+        .nhs-badge {
+          display: inline-block;
+          background: #0069B4; color: #fff;
+          font-size: 10pt; font-weight: 600;
+          padding: 3px 8px; border-radius: 3px;
+          letter-spacing: 1px; margin-bottom: 4px;
+        }
+        .org-name {
+          font-size: 11pt; font-weight: 500; color: #003087;
+          line-height: 1.3;
+        }
+        .org-sub { font-size: 9pt; color: #6b8fa3; }
+        .cert-num {
+          font-size: 8.5pt; color: #6b8fa3;
+          font-family: 'DM Sans', monospace; text-align: right;
+        }
+        .eyebrow {
+          font-size: 8.5pt; letter-spacing: 3px;
+          text-transform: uppercase; color: #41B6E6;
+          font-weight: 600; margin-bottom: 5mm;
+        }
+        .cert-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: 32pt; color: #003087;
+          line-height: 1.1; margin-bottom: 6mm;
+        }
+        .cert-title em { color: #0069B4; font-style: italic; }
+        .presented-to {
+          font-size: 10pt; color: #6b8fa3;
+          text-transform: uppercase; letter-spacing: 2px;
+          margin-bottom: 3mm;
+        }
+        .name-line {
+          font-family: 'DM Serif Display', serif;
+          font-size: 28pt; color: #0d1f2d;
+          border-bottom: 1.5px solid #cce0ee;
+          padding-bottom: 3mm; margin-bottom: 6mm;
+          min-width: 120mm; display: inline-block;
+        }
+        .cert-body-text {
+          font-size: 10.5pt; color: #2c4a5a; line-height: 1.6;
+          max-width: 160mm; margin-bottom: 8mm;
+        }
+        .cert-body-text strong { color: #003087; }
+        .sessions-list {
+          display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8mm;
+        }
+        .session-chip {
+          background: #f0f6fc; border: 1px solid #cce0ee;
+          color: #003087; font-size: 8pt; font-weight: 500;
+          padding: 2px 8px; border-radius: 10px;
+        }
+        .footer-row {
+          display: flex; align-items: flex-end;
+          justify-content: space-between; margin-top: auto;
+          padding-top: 6mm; border-top: 1px solid #e8f0f8;
+        }
+        .sig-block { }
+        .sig-line {
+          width: 52mm; height: 0; border-bottom: 1.5px solid #003087;
+          margin-bottom: 3px;
+        }
+        .sig-name { font-size: 9.5pt; font-weight: 600; color: #003087; }
+        .sig-role { font-size: 8.5pt; color: #6b8fa3; }
+        .date-block { text-align: right; }
+        .date-label { font-size: 8pt; color: #6b8fa3; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2px; }
+        .date-value { font-family: 'DM Serif Display', serif; font-size: 14pt; color: #003087; }
+        .cpd-badge {
+          text-align: center; background: #f0f6fc;
+          border: 1px solid #cce0ee; border-radius: 6px;
+          padding: 6px 14px;
+        }
+        .cpd-hours { font-size: 20pt; font-weight: 700; color: #003087; line-height: 1; }
+        .cpd-label { font-size: 7.5pt; color: #6b8fa3; text-transform: uppercase; letter-spacing: 1px; }
+        @media print {
+          body { margin: 0; }
+          @page { size: A4 landscape; margin: 0; }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="left-bar"></div>
+      <div class="accent-bar"></div>
+      <div class="cert-body">
+        <div class="cert-content">
+          <div class="top-row">
+            <div class="nhs-block">
+              <div><span class="nhs-badge">NHS</span></div>
+              <div class="org-name">Oxford University Hospitals<br>NHS Foundation Trust</div>
+              <div class="org-sub">Department of Critical Care Medicine</div>
+            </div>
+            <div class="cert-num">Certificate No. IMT/ICM/2026/001</div>
+          </div>
+
+          <div class="eyebrow">Certificate of Attendance</div>
+          <div class="cert-title">IMT <em>Critical Care</em><br>Teaching Day</div>
+
+          <div class="presented-to">Awarded to</div>
+          <div class="name-line">${name}</div>
+
+          <div class="cert-body-text">
+            for attending and completing the <strong>IMT Intensive Care Medicine Teaching Day</strong>,
+            an accredited full-day clinical skills and simulation course covering critical care
+            assessment, airway management, mechanical ventilation, renal replacement therapy,
+            transfer medicine and clinical simulation.
+          </div>
+
+          <div class="sessions-list">
+            <span class="session-chip">Shock &amp; Circulation</span>
+            <span class="session-chip">Basic Airway</span>
+            <span class="session-chip">Oxygen &amp; NIV</span>
+            <span class="session-chip">Mechanical Ventilation</span>
+            <span class="session-chip">Human Factors</span>
+            <span class="session-chip">Trauma</span>
+            <span class="session-chip">CVC &amp; Arterial Line</span>
+            <span class="session-chip">Simulation</span>
+            <span class="session-chip">Tracheostomy</span>
+            <span class="session-chip">Renal Replacement Therapy</span>
+            <span class="session-chip">Transfer Ventilator</span>
+          </div>
+        </div>
+
+        <div class="footer-row">
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <div class="sig-name">Course Director</div>
+            <div class="sig-role">IMT Critical Care Teaching Programme · OUH</div>
+          </div>
+          <div class="cpd-badge">
+            <div class="cpd-hours">7</div>
+            <div class="cpd-label">CPD Hours</div>
+          </div>
+          <div class="date-block">
+            <div class="date-label">Date of attendance</div>
+            <div class="date-value">20 May 2026</div>
+          </div>
+        </div>
+
+      </div>
+    </body>
+    </html>
+  `;
+
+  // Open in a new window and trigger print-to-PDF
+  const win = window.open('', '_blank', 'width=1120,height=800');
+  win.document.write(certHTML);
+  win.document.close();
+  win.onload = function() {
+    setTimeout(() => {
+      win.focus();
+      win.print();
+    }, 800); // wait for Google Fonts to load
+  };
+}
 </script>
 </body>
 </html>
